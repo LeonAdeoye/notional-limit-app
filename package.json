@@ -15,12 +15,14 @@
     "@mui/icons-material": "^7.0.1",
     "@mui/lab": "^7.0.0-beta.10",
     "@mui/material": "^7.0.1",
+    "@reduxjs/toolkit": "^2.6.1",
     "@tailwindcss/vite": "^4.0.17",
     "ag-grid-react": "^33.2.1",
     "amps": "^5.3.4-0.378635.60b2fcc",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
+    "redux-logger": "^3.0.6",
     "tailwindcss": "^4.0.17"
   },
   "devDependencies": {
