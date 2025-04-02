@@ -6,7 +6,7 @@ import {ColDef} from "ag-grid-community";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const DeskNotionalGrid = ({}) => {
+const DeskNotionalGrid = () => {
     const [deskData, setDeskData] =  useState<DeskNotionalInterface[]>([
         { desk: 'Delta One', buyNotionalLimit: 1000, sellNotionalLimit: 2000, grossNotionalLimit: 1000, currentBuyNotional: 100, currentSellNotional: 100, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 },
         { desk: 'Sales Trading Hong Kong', buyNotionalLimit: 4000, sellNotionalLimit: 4000, grossNotionalLimit: 1000, currentBuyNotional: 600, currentSellNotional: 100, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 },
