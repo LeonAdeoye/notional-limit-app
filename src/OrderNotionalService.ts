@@ -5,11 +5,13 @@ export class OrderNotionalService
     private readonly topic: string;
     private readonly url: string;
     private client = new Client("order-notional-reader");
+    private messageHandler: (message: any) => void;
 
-    constructor(topic: string, url: string)
+    constructor(topic: string, url: string, messageHandler: (message: any) => void)
     {
         this.topic = topic;
         this.url = url;
+        this.messageHandler = messageHandler;
     }
 
     public async connect(): Promise<void>
@@ -18,29 +20,12 @@ export class OrderNotionalService
         {
             await this.client.connect(this.url);
             const cmd = new Command("sow_and_subscribe").topic(this.topic);
-            await this.client.execute(cmd, this.onMessage);
+            await this.client.execute(cmd, this.messageHandler);
             console.log("Order notional service is connected to AMPS using URL: ", this.url);
         }
         catch (e)
         {
             console.error(e);
-        }
-    }
-
-    private onMessage(message: any): void
-    {
-        switch (message.header.command())
-        {
-            case "sow":
-                postMessage({messageType: "snapshot", orderNotional: message.data});
-                console.log("Order notional snapshot received: ", message.data);
-                break;
-            case "p":
-                postMessage({messageType: "update", orderNotional: message.data});
-                console.log("Order notional update received: ", message.data);
-                break;
-            default:
-                break;
         }
     }
 

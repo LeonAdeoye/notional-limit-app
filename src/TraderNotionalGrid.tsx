@@ -3,12 +3,34 @@ import { AgGridReact } from 'ag-grid-react';
 import {useEffect, useState} from "react";
 import {TraderNotionalInterface} from "./TraderNotionalInterface";
 import {OrderNotionalService} from "./OrderNotionalService";
-
+import {updateDeskNotional} from "./orderNotionalSlice";
+import {useDispatch} from "react-redux";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const TraderNotionalGrid = () => {
-    const [orderNotionalService, setOrderNotionalService] = useState<OrderNotionalService | null>(new OrderNotionalService("trading.notional.update", "ws://localhost:9008/amps/json"));
+    const dispatch = useDispatch();
+    const onMessage = (message: any): void =>
+    {
+        switch (message.header.command())
+        {
+            case "sow":
+                postMessage({messageType: "snapshot", orderNotional: message.data});
+                console.log("Order notional snapshot received: ", message.data);
+                break;
+            case "p":
+                postMessage({messageType: "update", orderNotional: message.data});
+                console.log("Order notional update received: ", message.data);
+                dispatch(updateDeskNotional(message.data));
+                break;
+            default:
+                break;
+        }
+    }
+
+    const [orderNotionalService] = useState<OrderNotionalService | null>
+    (new OrderNotionalService("trading.notional.update", "ws://localhost:9008/amps/json", onMessage));
+
     const [traderData, setTraderData] =  useState<TraderNotionalInterface[]>([
         { trader: 'Harper Hall', desk: '', buyNotionalLimit: 1000, sellNotionalLimit: 2000, grossNotionalLimit: 1000, currentBuyNotional: 100, currentSellNotional: 100, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 },
         { trader: 'Horatio Hall', desk: '',  buyNotionalLimit: 4000, sellNotionalLimit: 4000, grossNotionalLimit: 1000, currentBuyNotional: 600, currentSellNotional: 100, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 },
@@ -30,6 +52,8 @@ const TraderNotionalGrid = () => {
         { headerName: 'Current Gross Notional', field: 'currentGrossNotional' },
         { headerName: 'Current Gross Utilization %', field: 'currentGrossUtilization', width: 220}
     ]);
+
+
 
     useEffect(() =>
     {
