@@ -30,16 +30,86 @@ const TraderNotionalGrid = () => {
     (new OrderNotionalService("trading.notional.update", "ws://localhost:9008/amps/json", onMessage));
 
     const [traderData, setTraderData] =  useState<TraderNotionalInterface[]>([
-        { trader: 'Harper Hall', desk: '', buyNotionalLimit: 1000, sellNotionalLimit: 2000, grossNotionalLimit: 1000, currentBuyNotional: 100, currentSellNotional: 100, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 },
-        { trader: 'Horatio Hall', desk: '',  buyNotionalLimit: 4000, sellNotionalLimit: 4000, grossNotionalLimit: 1000, currentBuyNotional: 600, currentSellNotional: 100, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 },
-        { trader: 'David Hall', desk: '',  buyNotionalLimit: 5000, sellNotionalLimit: 5000, grossNotionalLimit: 2000, currentBuyNotional: 100, currentSellNotional: 400, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 },
-        { trader: 'Saori Hall', desk: '',  buyNotionalLimit: 5000, sellNotionalLimit: 5000, grossNotionalLimit: 2000, currentBuyNotional: 100, currentSellNotional: 400, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 },
-        { trader: 'Leon Hall', desk: '',  buyNotionalLimit: 5000, sellNotionalLimit: 5000, grossNotionalLimit: 2000, currentBuyNotional: 100, currentSellNotional: 400, currentGrossNotional: 100, currentBuyUtilization: 10, currentSellUtilization: 10, currentGrossUtilization: 10 }
+        {
+            traderName: 'Harper Hall',
+            traderId: '1',
+            deskName: '',
+            deskId: '1',
+            buyNotionalLimit: 1000,
+            sellNotionalLimit: 2000,
+            grossNotionalLimit: 1000,
+            currentBuyNotional: 100,
+            currentSellNotional: 100,
+            currentGrossNotional: 100,
+            currentBuyUtilization: 10,
+            currentSellUtilization: 10,
+            currentGrossUtilization: 10
+        },
+        {
+            traderName: 'Horatio Hall',
+            traderId: '2',
+            deskName: '',
+            deskId: '2',
+            buyNotionalLimit: 4000,
+            sellNotionalLimit: 4000,
+            grossNotionalLimit: 1000,
+            currentBuyNotional: 600,
+            currentSellNotional: 100,
+            currentGrossNotional: 100,
+            currentBuyUtilization: 10,
+            currentSellUtilization: 10,
+            currentGrossUtilization: 10
+        },
+        {
+            traderName: 'David Hall',
+            traderId: '3',
+            deskName: '',
+            deskId: '3',
+            buyNotionalLimit: 5000,
+            sellNotionalLimit: 5000,
+            grossNotionalLimit: 2000,
+            currentBuyNotional: 100,
+            currentSellNotional: 400,
+            currentGrossNotional: 100,
+            currentBuyUtilization: 10,
+            currentSellUtilization: 10,
+            currentGrossUtilization: 10
+        },
+        {
+            traderName: 'Saori Hall',
+            traderId: '4',
+            deskName: '',
+            deskId: '4',
+            buyNotionalLimit: 5000,
+            sellNotionalLimit: 5000,
+            grossNotionalLimit: 2000
+            currentBuyNotional: 100,
+            currentSellNotional: 400,
+            currentGrossNotional: 100,
+            currentBuyUtilization: 10,
+            currentSellUtilization: 10,
+            currentGrossUtilization: 10
+        },
+        {
+            traderName: 'Leon Hall',
+            traderId: '5',
+            deskName: '',
+            deskId: '5',
+            buyNotionalLimit: 5000,
+            sellNotionalLimit: 5000,
+            grossNotionalLimit: 2000,
+            currentBuyNotional: 100,
+            currentSellNotional: 400,
+            currentGrossNotional: 100,
+            currentBuyUtilization: 10,
+            currentSellUtilization: 10,
+            currentGrossUtilization: 10 }
     ]);
 
     const [columnDefs] = useState<ColDef<TraderNotionalInterface>[]>( [
-        { headerName: 'Trader', field: 'trader', width: 150, filter: true},
-        { headerName: 'Desk', field: 'desk', width: 200, filter: true},
+        { headerName: 'Trader', field: 'traderName', width: 150, filter: true},
+        { headerName: 'Trader ID', field: 'traderId', width: 150, hide: true},
+        { headerName: 'Desk', field: 'deskName', width: 200, filter: true},
         { headerName: 'Buy Notional Limit', field: 'buyNotionalLimit'},
         { headerName: 'Current Buy Notional', field: 'currentBuyNotional' },
         { headerName: 'Current Buy Utilization %', field: 'currentBuyUtilization' },
@@ -50,8 +120,6 @@ const TraderNotionalGrid = () => {
         { headerName: 'Current Gross Notional', field: 'currentGrossNotional' },
         { headerName: 'Current Gross Utilization %', field: 'currentGrossUtilization', width: 220}
     ]);
-
-
 
     useEffect(() => {
         orderNotionalService?.connect().then(() => {

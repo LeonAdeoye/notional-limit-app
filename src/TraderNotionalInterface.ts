@@ -1,7 +1,8 @@
 import {NotionalInterface} from "./NotionalInterface";
 
 export interface TraderNotionalInterface extends NotionalInterface {
-    trader: string;
+    traderName: string;
+    traderId: string;
     deskId?: string;
     deskName?: string;
 }
