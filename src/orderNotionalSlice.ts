@@ -17,7 +17,7 @@ const orderNotionalSlice = createSlice({
             else
                 state.orderNotionals.push(action.payload);
         },
-        updateTraderNotional: (state, action) => {
+        updateTraderNotional: (state, action: PayloadAction<TraderNotionalInterface>) => {
             const index = state.orderNotionals.findIndex((notional) => notional.traderId === action.payload.traderId);
             if (index !== -1)
                 state.orderNotionals[index] = action.payload;

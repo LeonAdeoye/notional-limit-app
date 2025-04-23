@@ -10,16 +10,15 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 const TraderNotionalGrid = () => {
     const dispatch = useDispatch();
-    const onMessage = (message: any): void => {
-        switch (message.header.command()) {
+
+    const onMessage = ({data, header}): void => {
+        switch (header.command()) {
             case "sow":
-                postMessage({messageType: "snapshot", orderNotional: message.data});
-                console.log("Order notional snapshot received: ", message.data);
+                console.log("Order notional snapshot received: ", data);
                 break;
             case "p":
-                postMessage({messageType: "update", orderNotional: message.data});
-                console.log("Order notional update received: ", message.data);
-                dispatch(updateDeskNotional(message.data));
+                console.log("Order notional update received: ", data);
+                dispatch(updateDeskNotional(data));
                 break;
             default:
                 break;
