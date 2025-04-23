@@ -10,10 +10,8 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 const TraderNotionalGrid = () => {
     const dispatch = useDispatch();
-    const onMessage = (message: any): void =>
-    {
-        switch (message.header.command())
-        {
+    const onMessage = (message: any): void => {
+        switch (message.header.command()) {
             case "sow":
                 postMessage({messageType: "snapshot", orderNotional: message.data});
                 console.log("Order notional snapshot received: ", message.data);
@@ -55,8 +53,7 @@ const TraderNotionalGrid = () => {
 
 
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         orderNotionalService?.connect().then(() => {
             console.log("Connected to AMPS");
         }).catch((error) => {
