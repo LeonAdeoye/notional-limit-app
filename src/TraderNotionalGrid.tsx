@@ -1,31 +1,11 @@
 import {AllCommunityModule, ColDef, ModuleRegistry} from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {TraderNotionalInterface} from "./TraderNotionalInterface";
-import {OrderNotionalService} from "./OrderNotionalService";
-import {updateTraderNotional} from "./orderNotionalSlice";
-import {useDispatch} from "react-redux";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const TraderNotionalGrid = () => {
-        const dispatch = useDispatch();
-
-        const onMessage = ({data, header}:{ data: TraderNotionalInterface, header: any }): void => {
-            switch (header.command()) {
-                case "sow":
-                    break;
-                case "p":
-                    dispatch(updateTraderNotional(data));
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    const [orderNotionalService] = useState<OrderNotionalService | null>
-    (new OrderNotionalService("trading.notional.update", "ws://localhost:9008/amps/json", onMessage));
-
     const [traderData] =  useState<TraderNotionalInterface[]>([
         {
             traderName: 'Harper Hall',
@@ -117,15 +97,6 @@ const TraderNotionalGrid = () => {
         { headerName: 'Current Gross Notional', field: 'currentGrossNotional' },
         { headerName: 'Current Gross Utilization %', field: 'currentGrossUtilization', width: 220}
     ]);
-
-    useEffect(() => {
-        orderNotionalService?.connect().then(() => {
-            console.log("Connected to AMPS");
-        }).catch((error) => {
-            console.error("Error connecting to AMPS: " + error);
-        });
-        return () => orderNotionalService?.disconnect();
-    }, []);
 
     return (
         <div style={{ marginTop: 10, marginLeft: 10, height: 500, width: '99%'}}>
