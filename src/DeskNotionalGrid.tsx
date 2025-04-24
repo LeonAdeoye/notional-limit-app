@@ -3,10 +3,27 @@ import { AgGridReact } from 'ag-grid-react';
 import {useState} from "react";
 import {DeskNotionalInterface} from "./DeskNotionalInterface";
 import {ColDef} from "ag-grid-community";
+import {TraderNotionalInterface} from "./TraderNotionalInterface";
+import {updateDeskNotional} from "./orderNotionalSlice";
+import {useDispatch} from "react-redux";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const DeskNotionalGrid = () => {
+    const dispatch = useDispatch();
+
+    const onMessage = ({data, header}:{ data: TraderNotionalInterface, header: any }): void => {
+        switch (header.command()) {
+            case "sow":
+                break;
+            case "p":
+                dispatch(updateDeskNotional(data));
+                break;
+            default:
+                break;
+        }
+    }
+
     const [deskData] =  useState<DeskNotionalInterface[]>([
         {
             deskName: 'Delta One',

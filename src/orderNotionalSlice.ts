@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import { TraderNotionalInterface } from './TraderNotionalInterface';
+import {DeskNotionalInterface} from "./DeskNotionalInterface";
 
 
 const initialState: { orderNotionals: TraderNotionalInterface[] } = {
@@ -10,7 +11,7 @@ const orderNotionalSlice = createSlice({
     name: 'orderNotional',
     initialState,
     reducers: {
-        updateDeskNotional: (state, action: PayloadAction<TraderNotionalInterface>) => {
+        updateDeskNotional: (state, action: PayloadAction<DeskNotionalInterface>) => {
             const index = state.orderNotionals.findIndex((notional) => notional.deskId === action.payload.deskId);
             if (index !== -1)
                 state.orderNotionals[index] = action.payload;
