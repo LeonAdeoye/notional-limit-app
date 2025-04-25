@@ -84,13 +84,13 @@ const DeskNotionalGrid = () => {
         { headerName: 'Desk ID', field: 'deskId', hide: true},
         { headerName: 'Buy Notional Limit', field: 'buyNotionalLimit' },
         { headerName: 'Current Buy Notional', field: 'currentBuyNotional' },
-        { headerName: 'Current Buy Utilization %', field: 'currentBuyUtilization' },
+        { headerName: 'Current Buy Utilization %', field: 'buyUtilizationPercentage' },
         { headerName: 'Sell Notional Limit', field: 'sellNotionalLimit' },
         { headerName: 'Current Sell Notional', field: 'currentSellNotional' },
-        { headerName: 'Current Sell Utilization %', field: 'currentSellUtilization' },
+        { headerName: 'Current Sell Utilization %', field: 'sellUtilizationPercentage' },
         { headerName: 'Gross Notional Limit', field: 'grossNotionalLimit' },
         { headerName: 'Current Gross Notional', field: 'currentGrossNotional' },
-        { headerName: 'Current Gross Utilization %', field: 'currentGrossUtilization' , width: 220}
+        { headerName: 'Current Gross Utilization %', field: 'grossUtilizationPercentage' , width: 220}
     ]);
 
     return (

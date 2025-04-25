@@ -5,8 +5,8 @@ export interface NotionalInterface {
     currentBuyNotional?: number;
     currentSellNotional?: number;
     currentGrossNotional?: number;
-    currentBuyUtilization?: number;
-    currentSellUtilization?: number;
-    currentGrossUtilization?: number;
+    buyUtilizationPercentage?: number;
+    sellUtilizationPercentage?: number;
+    grossUtilizationPercentage?: number;
     side?: string;
 }
