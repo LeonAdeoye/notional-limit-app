@@ -14,70 +14,24 @@ const DeskNotionalGrid = () => {
     const deskData: DeskNotionalInterface[] = useSelector((state) => state.orderNotional.orderNotionals);
 
     const onMessage = ({data, header}:{ data: DeskNotionalInterface, header: any }): void => {
-        switch (header.command()) {
-            case "sow":
-                break;
-            case "p":
-                dispatch(updateDeskNotional(data));
-                break;
-            default:
-                break;
-        }
+        if(header.command() === "p")
+            dispatch(updateDeskNotional(data));
     }
 
     const [orderNotionalService] = useState<OrderNotionalService | null>
-    (new OrderNotionalService("trading.notional.update", "ws://localhost:9008/amps/json", onMessage));
+    (new OrderNotionalService("trading.notional.update","ws://localhost:9008/amps/json", onMessage));
 
     useEffect(() => {
         orderNotionalService?.connect().then(() => {
+            orderNotionalService?.initializeNotionalValues().then(() => {
+                console.log("Initial values requested");
+            });
             console.log("Connected to AMPS");
         }).catch((error) => {
             console.error("Error connecting to AMPS: " + error);
         });
         return () => orderNotionalService?.disconnect();
     }, []);
-
-    // const [deskData] =  useState<DeskNotionalInterface[]>([
-    //     {
-    //         deskName: 'Delta One',
-    //         deskId: '1',
-    //         buyNotionalLimit: 1000,
-    //         sellNotionalLimit: 2000,
-    //         grossNotionalLimit: 1000,
-    //         currentBuyNotional: 100,
-    //         currentSellNotional: 100,
-    //         currentGrossNotional: 100,
-    //         currentBuyUtilization: 10,
-    //         currentSellUtilization: 10,
-    //         currentGrossUtilization: 10
-    //     },
-    //     {
-    //         deskName: 'Sales Trading Hong Kong',
-    //         deskId: '2',
-    //         buyNotionalLimit: 4000,
-    //         sellNotionalLimit: 4000,
-    //         grossNotionalLimit: 1000,
-    //         currentBuyNotional: 600,
-    //         currentSellNotional: 100,
-    //         currentGrossNotional: 100,
-    //         currentBuyUtilization: 10,
-    //         currentSellUtilization: 10,
-    //         currentGrossUtilization: 10
-    //     },
-    //     {
-    //         deskName: 'Program Trading Japan',
-    //         deskId: '3',
-    //         buyNotionalLimit: 5000,
-    //         sellNotionalLimit: 5000,
-    //         grossNotionalLimit: 2000,
-    //         currentBuyNotional: 100,
-    //         currentSellNotional: 400,
-    //         currentGrossNotional: 100,
-    //         currentBuyUtilization: 10,
-    //         currentSellUtilization: 10,
-    //         currentGrossUtilization: 10
-    //     }
-    // ]);
 
     const [columnDefs] = useState<ColDef<DeskNotionalInterface>[]>([
         { headerName: 'DeskName', field: 'deskName', filter: true},

@@ -18,9 +18,9 @@ const TraderNotionalGrid = () => {
             currentBuyNotional: 100,
             currentSellNotional: 100,
             currentGrossNotional: 100,
-            currentBuyUtilization: 10,
-            currentSellUtilization: 10,
-            currentGrossUtilization: 10
+            buyUtilizationPercentage: 10,
+            sellUtilizationPercentage: 10,
+            grossUtilizationPercentage: 10
         },
         {
             traderName: 'Horatio Hall',
@@ -33,9 +33,9 @@ const TraderNotionalGrid = () => {
             currentBuyNotional: 600,
             currentSellNotional: 100,
             currentGrossNotional: 100,
-            currentBuyUtilization: 10,
-            currentSellUtilization: 10,
-            currentGrossUtilization: 10
+            buyUtilizationPercentage: 10,
+            sellUtilizationPercentage: 10,
+            grossUtilizationPercentage: 10
         },
         {
             traderName: 'David Hall',
@@ -48,9 +48,9 @@ const TraderNotionalGrid = () => {
             currentBuyNotional: 100,
             currentSellNotional: 400,
             currentGrossNotional: 100,
-            currentBuyUtilization: 10,
-            currentSellUtilization: 10,
-            currentGrossUtilization: 10
+            buyUtilizationPercentage: 10,
+            sellUtilizationPercentage: 10,
+            grossUtilizationPercentage: 10
         },
         {
             traderName: 'Saori Hall',
@@ -63,9 +63,9 @@ const TraderNotionalGrid = () => {
             currentBuyNotional: 100,
             currentSellNotional: 400,
             currentGrossNotional: 100,
-            currentBuyUtilization: 10,
-            currentSellUtilization: 10,
-            currentGrossUtilization: 10
+            buyUtilizationPercentage: 10,
+            sellUtilizationPercentage: 10,
+            grossUtilizationPercentage: 10
         },
         {
             traderName: 'Leon Hall',
@@ -78,9 +78,9 @@ const TraderNotionalGrid = () => {
             currentBuyNotional: 100,
             currentSellNotional: 400,
             currentGrossNotional: 100,
-            currentBuyUtilization: 10,
-            currentSellUtilization: 10,
-            currentGrossUtilization: 10 }
+            buyUtilizationPercentage: 10,
+            sellUtilizationPercentage: 10,
+            grossUtilizationPercentage: 10 }
     ]);
 
     const [columnDefs] = useState<ColDef<TraderNotionalInterface>[]>( [
@@ -89,13 +89,13 @@ const TraderNotionalGrid = () => {
         { headerName: 'Desk', field: 'deskName', width: 200, filter: true},
         { headerName: 'Buy Notional Limit', field: 'buyNotionalLimit'},
         { headerName: 'Current Buy Notional', field: 'currentBuyNotional' },
-        { headerName: 'Current Buy Utilization %', field: 'currentBuyUtilization' },
+        { headerName: 'Current Buy Utilization %', field: 'buyUtilizationPercentage' },
         { headerName: 'Sell Notional Limit', field: 'sellNotionalLimit' },
         { headerName: 'Current Sell Notional', field: 'currentSellNotional' },
-        { headerName: 'Current Sell Utilization %', field: 'currentSellUtilization' },
+        { headerName: 'Current Sell Utilization %', field: 'sellUtilizationPercentage' },
         { headerName: 'Gross Notional Limit', field: 'grossNotionalLimit' },
         { headerName: 'Current Gross Notional', field: 'currentGrossNotional' },
-        { headerName: 'Current Gross Utilization %', field: 'currentGrossUtilization', width: 220}
+        { headerName: 'Current Gross Utilization %', field: 'grossUtilizationPercentage', width: 220}
     ]);
 
     return (
