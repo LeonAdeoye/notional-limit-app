@@ -14,18 +14,15 @@ const DeskNotionalGrid = () => {
     const deskData: DeskNotionalInterface[] = useSelector((state) => state.orderNotional.orderNotionals);
 
     const onMessage = ({data, header}:{ data: DeskNotionalInterface, header: any }): void => {
-        if(header.command() === "p")
+        if(header.command() === "p" || header.command() === "sow")
             dispatch(updateDeskNotional(data));
     }
 
     const [orderNotionalService] = useState<OrderNotionalService | null>
-    (new OrderNotionalService("trading.notional.update","ws://localhost:9008/amps/json", onMessage));
+    (new OrderNotionalService("desk.notional.update","ws://localhost:9008/amps/json", onMessage));
 
     useEffect(() => {
         orderNotionalService?.connect().then(() => {
-            orderNotionalService?.initializeNotionalValues().then(() => {
-                console.log("Initial values requested");
-            });
             console.log("Connected to AMPS");
         }).catch((error) => {
             console.error("Error connecting to AMPS: " + error);
