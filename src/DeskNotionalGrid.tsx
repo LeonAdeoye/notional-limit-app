@@ -11,7 +11,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 const DeskNotionalGrid = () => {
     const dispatch = useDispatch();
-    const deskData: DeskNotionalInterface[] = useSelector((state) => state.orderNotional.orderNotionals);
+    const deskData: DeskNotionalInterface[] = useSelector((state) => state.orderNotional.deskOrderNotionals);
 
     const onMessage = ({data, header}:{ data: DeskNotionalInterface, header: any }): void => {
         if(header.command() === "p" || header.command() === "sow")

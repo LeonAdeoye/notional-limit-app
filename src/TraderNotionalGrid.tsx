@@ -1,87 +1,33 @@
 import {AllCommunityModule, ColDef, ModuleRegistry} from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TraderNotionalInterface} from "./TraderNotionalInterface";
+import {OrderNotionalService} from "./OrderNotionalService";
+import {updateTraderNotional} from "./orderNotionalSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const TraderNotionalGrid = () => {
-    const [traderData] =  useState<TraderNotionalInterface[]>([
-        {
-            traderName: 'Harper Hall',
-            traderId: '1',
-            deskName: 'Sales Trading Hong Kong',
-            deskId: '1',
-            buyNotionalLimit: 1000,
-            sellNotionalLimit: 2000,
-            grossNotionalLimit: 1000,
-            currentBuyNotional: 100,
-            currentSellNotional: 100,
-            currentGrossNotional: 100,
-            buyUtilizationPercentage: 10,
-            sellUtilizationPercentage: 10,
-            grossUtilizationPercentage: 10
-        },
-        {
-            traderName: 'Horatio Hall',
-            traderId: '2',
-            deskName: 'Sales Trading Hong Kong',
-            deskId: '1',
-            buyNotionalLimit: 4000,
-            sellNotionalLimit: 4000,
-            grossNotionalLimit: 1000,
-            currentBuyNotional: 600,
-            currentSellNotional: 100,
-            currentGrossNotional: 100,
-            buyUtilizationPercentage: 10,
-            sellUtilizationPercentage: 10,
-            grossUtilizationPercentage: 10
-        },
-        {
-            traderName: 'David Hall',
-            traderId: '2',
-            deskName: 'Program Trading Japan',
-            deskId: '3',
-            buyNotionalLimit: 5000,
-            sellNotionalLimit: 5000,
-            grossNotionalLimit: 2000,
-            currentBuyNotional: 100,
-            currentSellNotional: 400,
-            currentGrossNotional: 100,
-            buyUtilizationPercentage: 10,
-            sellUtilizationPercentage: 10,
-            grossUtilizationPercentage: 10
-        },
-        {
-            traderName: 'Saori Hall',
-            traderId: '4',
-            deskName: 'Program Trading Japan',
-            deskId: '4',
-            buyNotionalLimit: 5000,
-            sellNotionalLimit: 5000,
-            grossNotionalLimit: 2000,
-            currentBuyNotional: 100,
-            currentSellNotional: 400,
-            currentGrossNotional: 100,
-            buyUtilizationPercentage: 10,
-            sellUtilizationPercentage: 10,
-            grossUtilizationPercentage: 10
-        },
-        {
-            traderName: 'Leon Hall',
-            traderId: '5',
-            deskName: 'Delta One',
-            deskId: '5',
-            buyNotionalLimit: 5000,
-            sellNotionalLimit: 5000,
-            grossNotionalLimit: 2000,
-            currentBuyNotional: 100,
-            currentSellNotional: 400,
-            currentGrossNotional: 100,
-            buyUtilizationPercentage: 10,
-            sellUtilizationPercentage: 10,
-            grossUtilizationPercentage: 10 }
-    ]);
+    const dispatch = useDispatch();
+    const traderData: TraderNotionalInterface[] = useSelector((state) => state.orderNotional.traderOrderNotionals);
+
+    const onMessage = ({data, header}:{ data: TraderNotionalInterface, header: any }): void => {
+        if(header.command() === "p" || header.command() === "sow")
+            dispatch(updateTraderNotional(data));
+    }
+
+    const [orderNotionalService] = useState<OrderNotionalService | null>
+    (new OrderNotionalService("trader.notional.update","ws://localhost:9008/amps/json", onMessage));
+
+    useEffect(() => {
+        orderNotionalService?.connect().then(() => {
+            console.log("Connected to AMPS");
+        }).catch((error) => {
+            console.error("Error connecting to AMPS: " + error);
+        });
+        return () => orderNotionalService?.disconnect();
+    }, []);
 
     const [columnDefs] = useState<ColDef<TraderNotionalInterface>[]>( [
         { headerName: 'Trader', field: 'traderName', width: 150, filter: true},

@@ -1,14 +1,13 @@
 import { Client, Command } from "amps";
 
 export class OrderNotionalService {
-    private readonly responseTopic: string;
+    private readonly updatesTopic: string;
     private readonly url: string;
     private client = new Client("order-notional-reader");
     private readonly messageHandler: (message: any) => void;
-    private readonly deskNotionalUpdatesTopic = "desk.notional.update";
 
-    constructor(responseTopic: string, url: string, messageHandler: (message: any) => void) {
-        this.responseTopic = responseTopic;
+    constructor(updatesTopic: string, url: string, messageHandler: (message: any) => void) {
+        this.updatesTopic = updatesTopic;
         this.url = url;
         this.messageHandler = messageHandler;
     }
@@ -16,7 +15,7 @@ export class OrderNotionalService {
     public async connect(): Promise<void> {
         try {
             await this.client.connect(this.url);
-            const cmd = new Command("sow_and_subscribe").topic(this.deskNotionalUpdatesTopic);
+            const cmd = new Command("sow_and_subscribe").topic(this.updatesTopic);
             await this.client.execute(cmd, this.messageHandler);
         }
         catch (e) {
