@@ -14,10 +14,10 @@ const orderNotionalSlice = createSlice({
         updateDeskNotional: (state, action: PayloadAction<DeskNotionalInterface>) => {
             const index = state.deskOrderNotionals.findIndex((notional) => notional.deskId === action.payload.deskId);
             if (index !== -1) {
-                Object.keys(action.payload).forEach((key) => {
-                    if (key in state.deskOrderNotionals[index])
-                        (state.deskOrderNotionals[index] as any)[key] = (action.payload as any)[key];
-                });
+                state.deskOrderNotionals[index] = {
+                    ...state.deskOrderNotionals[index],
+                    ...action.payload,
+                };
             } else {
                 state.deskOrderNotionals.push(action.payload as DeskNotionalInterface);
             }
@@ -25,10 +25,10 @@ const orderNotionalSlice = createSlice({
         updateTraderNotional: (state, action: PayloadAction<TraderNotionalInterface>) => {
             const index = state.traderOrderNotionals.findIndex((notional) => notional.traderId === action.payload.traderId);
             if (index !== -1) {
-                Object.keys(action.payload).forEach((key) => {
-                    if (key in state.traderOrderNotionals[index])
-                        (state.traderOrderNotionals[index] as any)[key] = (action.payload as any)[key];
-                });
+                state.traderOrderNotionals[index] = {
+                    ...state.traderOrderNotionals[index],
+                    ...action.payload,
+                };
             } else {
                 state.traderOrderNotionals.push(action.payload as TraderNotionalInterface);
             }

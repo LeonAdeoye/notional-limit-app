@@ -11,6 +11,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 const DeskNotionalGrid = () => {
     const dispatch = useDispatch();
+
     const deskData: DeskNotionalInterface[] = useSelector((state) => state.orderNotional.deskOrderNotionals);
 
     const onMessage = ({data, header}:{ data: DeskNotionalInterface, header: any }): void => {
@@ -20,15 +21,6 @@ const DeskNotionalGrid = () => {
 
     const [orderNotionalService] = useState<OrderNotionalService | null>
     (new OrderNotionalService("desk.notional.update","ws://localhost:9008/amps/json", onMessage));
-
-    useEffect(() => {
-        orderNotionalService?.connect().then(() => {
-            console.log("Connected to AMPS");
-        }).catch((error) => {
-            console.error("Error connecting to AMPS: " + error);
-        });
-        return () => orderNotionalService?.disconnect();
-    }, []);
 
     const [columnDefs] = useState<ColDef<DeskNotionalInterface>[]>([
         { headerName: 'DeskName', field: 'deskName', filter: true},
@@ -40,6 +32,16 @@ const DeskNotionalGrid = () => {
         { headerName: 'Gross Notional Limit', field: 'grossNotionalLimit' },
         { headerName: 'Current Gross Notional', field: 'currentGrossNotional' },
     ]);
+
+    useEffect(() => {
+        orderNotionalService?.connect().then(() => {
+            console.log("Connected to AMPS");
+        }).catch((error) => {
+            console.error("Error connecting to AMPS: " + error);
+        });
+        return () => orderNotionalService?.disconnect();
+    }, []);
+
 
     return (
         <div style={{ marginTop: 10, marginLeft: 10, height: 500, width: '99%'}}>
