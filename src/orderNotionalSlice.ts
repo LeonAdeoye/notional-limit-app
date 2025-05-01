@@ -1,10 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import { TraderNotionalInterface } from './TraderNotionalInterface';
 import {DeskNotionalInterface} from "./DeskNotionalInterface";
+import {NotionalBreachInterface} from "./NotionalBreachInterface";
 
-const initialState: { deskOrderNotionals: DeskNotionalInterface[], traderOrderNotionals : TraderNotionalInterface[]} = {
+const initialState: { deskOrderNotionals: DeskNotionalInterface[], traderOrderNotionals: TraderNotionalInterface[], notionalBreaches: NotionalBreachInterface[]} = {
     deskOrderNotionals: [],
-    traderOrderNotionals: []
+    traderOrderNotionals: [],
+    notionalBreaches: []
 }
 
 const orderNotionalSlice = createSlice({
@@ -32,9 +34,20 @@ const orderNotionalSlice = createSlice({
             } else {
                 state.traderOrderNotionals.push(action.payload as TraderNotionalInterface);
             }
+        },
+        updateNotionalBreach: (state, action: PayloadAction<NotionalBreachInterface> ) => {
+            const index = state.notionalBreaches.findIndex((breach) => breach.orderId === action.payload.traderId && breach.deskId === action.payload.orderId);
+            if (index !== -1) {
+                state.notionalBreaches[index] = {
+                    ...state.notionalBreaches[index],
+                    ...action.payload,
+                };
+            } else {
+                state.notionalBreaches.push(action.payload as NotionalBreachInterface);
+            }
         }
     }
 });
 
 export default orderNotionalSlice.reducer;
-export const { updateDeskNotional, updateTraderNotional } = orderNotionalSlice.actions;
+export const { updateDeskNotional, updateTraderNotional, updateNotionalBreach } = orderNotionalSlice.actions;

@@ -33,7 +33,7 @@ const DeskNotionalGrid = () => {
 
     const [columnDefs] = useState<ColDef<DeskNotionalInterface>[]>([
         { headerName: 'DeskName', field: 'deskName', filter: true},
-        { headerName: 'Desk ID', field: 'deskId', hide: true},
+        { headerName: 'Desk Id', field: 'deskId', hide: true},
         { headerName: 'Buy Notional Limit', field: 'buyNotionalLimit' , valueFormatter: numberFormatter},
         { headerName: 'Current Buy Notional', field: 'currentBuyNotional' , valueFormatter: numberFormatter},
         { headerName: 'Current Buy Utilization %', field: 'buyUtilizationPercentage' },

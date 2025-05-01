@@ -32,7 +32,7 @@ const TraderNotionalGrid = () => {
 
     const [columnDefs] = useState<ColDef<TraderNotionalInterface>[]>( [
         { headerName: 'Trader', field: 'traderName', width: 150, filter: true},
-        { headerName: 'Trader ID', field: 'traderId', width: 150, hide: true},
+        { headerName: 'Trader Id', field: 'traderId', width: 150, hide: true},
         { headerName: 'Desk', field: 'deskName', width: 200, filter: true},
         { headerName: 'Buy Notional Limit', field: 'buyNotionalLimit', valueFormatter: numberFormatter},
         { headerName: 'Current Buy Notional', field: 'currentBuyNotional' , valueFormatter: numberFormatter},
