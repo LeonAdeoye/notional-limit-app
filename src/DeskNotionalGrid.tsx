@@ -6,6 +6,7 @@ import {ColDef} from "ag-grid-community";
 import {updateDeskNotional} from "./orderNotionalSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {OrderNotionalService} from "./OrderNotionalService";
+import {numberFormatter} from "./utilities";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -33,14 +34,14 @@ const DeskNotionalGrid = () => {
     const [columnDefs] = useState<ColDef<DeskNotionalInterface>[]>([
         { headerName: 'DeskName', field: 'deskName', filter: true},
         { headerName: 'Desk ID', field: 'deskId', hide: true},
-        { headerName: 'Buy Notional Limit', field: 'buyNotionalLimit' },
-        { headerName: 'Current Buy Notional', field: 'currentBuyNotional' },
+        { headerName: 'Buy Notional Limit', field: 'buyNotionalLimit' , valueFormatter: numberFormatter},
+        { headerName: 'Current Buy Notional', field: 'currentBuyNotional' , valueFormatter: numberFormatter},
         { headerName: 'Current Buy Utilization %', field: 'buyUtilizationPercentage' },
-        { headerName: 'Sell Notional Limit', field: 'sellNotionalLimit' },
-        { headerName: 'Current Sell Notional', field: 'currentSellNotional' },
+        { headerName: 'Sell Notional Limit', field: 'sellNotionalLimit' , valueFormatter: numberFormatter},
+        { headerName: 'Current Sell Notional', field: 'currentSellNotional' , valueFormatter: numberFormatter},
         { headerName: 'Current Sell Utilization %', field: 'sellUtilizationPercentage' },
-        { headerName: 'Gross Notional Limit', field: 'grossNotionalLimit' },
-        { headerName: 'Current Gross Notional', field: 'currentGrossNotional' },
+        { headerName: 'Gross Notional Limit', field: 'grossNotionalLimit' , valueFormatter: numberFormatter},
+        { headerName: 'Current Gross Notional', field: 'currentGrossNotional' , valueFormatter: numberFormatter},
         { headerName: 'Current Gross Utilization %', field: 'grossUtilizationPercentage' , width: 220}
     ]);
 
