@@ -27,3 +27,7 @@ export const getPercentageColour = (params: any) => {
 export const getSideColour = (params: any) => {
     return (params.value === "BUY") ? {fontWeight: 'bold', color: 'darkblue'} : {fontWeight: 'bold', color: 'darkred'};
 }
+
+export const getLimitBreachTypeColour = (params: any) => {
+    if (params.value.includes("Full")) return {fontWeight: 'bold', color: 'olive'};
+}

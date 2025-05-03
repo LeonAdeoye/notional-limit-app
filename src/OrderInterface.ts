@@ -4,5 +4,6 @@ export interface OrderInterface {
     quantity: number;
     price: number;
     currency: string;
+    tradeTimestamp: string;
     orderId: string;
 }

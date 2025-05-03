@@ -6,7 +6,7 @@ import {ColDef} from "ag-grid-community";
 import {updateNotionalBreach} from "./orderNotionalSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {OrderNotionalService} from "./OrderNotionalService";
-import {getPercentageColour, getSideColour, numberFormatter} from "./utilities";
+import {getLimitBreachTypeColour, getPercentageColour, getSideColour, numberFormatter} from "./utilities";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -25,12 +25,14 @@ const NotionalBreachesGrid = () => {
     (new OrderNotionalService("trading.limit.breach","ws://localhost:9008/amps/json", onMessage));
 
     const [columnDefs] = useState<ColDef<NotionalBreachInterface>[]>([
-        { headerName: 'Desk', field: 'deskName', filter: true},
+        { headerName: 'Desk', field: 'deskName', filter: true, pinned: 'left'},
         { headerName: 'Desk Id', field: 'deskId', hide: true},
         { headerName: 'Trader Id', field: 'traderId', hide: true},
-        { headerName: 'Trader', field: 'traderName', filter: true},
-        { headerName: 'Breach Type', field: 'breachType', filter: true , width: 150},
+        { headerName: 'Trader', field: 'traderName', filter: true, pinned: 'left'},
+        { headerName: 'Breach Type', field: 'breachType', filter: true , width: 180,
+            valueFormatter: (params) => `${params.data.limitPercentage} % ${params.data.breachType}`, cellStyle: params => getLimitBreachTypeColour(params)},
         { headerName: 'Order Id', field: 'orderId'},
+        { headerName: 'Timestamp', field: 'tradeTimestamp', filter: true, width: 150, valueFormatter: (params) => `${params.value[3]}:${params.value[4]}:${params.value[5]}`},
         { headerName: 'Symbol', field: 'symbol', filter: true, width: 150},
         { headerName: 'Side', field: 'side', filter: true, width: 100, cellStyle: (params) => getSideColour(params)},
         { headerName: 'Price', field: 'price', width: 150},
@@ -38,7 +40,6 @@ const NotionalBreachesGrid = () => {
         { headerName: 'Currency', field: 'currency', width: 120},
         { headerName: 'Notional Local', field: 'notionalLocal', valueFormatter: numberFormatter},
         { headerName: 'Order Notional $', field: 'notionalUSD', valueFormatter: numberFormatter},
-        { headerName: 'Limit %', field: 'limitPercentage', width: 100},
         { headerName: 'Buy Notional Limit $', field: 'buyNotionalLimit' , valueFormatter: numberFormatter },
         { headerName: 'Buy Notional $', field: 'currentBuyNotional' , valueFormatter: numberFormatter, width: 160},
         { headerName: 'Buy Utilization %', field: 'buyUtilizationPercentage' , width: 170, cellStyle: (params) => getPercentageColour(params)},
